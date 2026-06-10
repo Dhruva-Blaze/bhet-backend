@@ -4,7 +4,7 @@ import multer from "multer";
 
 const storage = new CloudinaryStorage({
     cloudinary,
-    params: async (req, file) => ({
+    params: async (req: any, file: any) => ({
         folder: "products",
         allowed_formats: ["jpeg", "jpg", "png", "webp"],
         public_id: `${Date.now()}-${file.originalname}`
