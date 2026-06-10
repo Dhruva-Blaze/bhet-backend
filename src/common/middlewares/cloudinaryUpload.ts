@@ -1,20 +1,20 @@
-const cloudinaryStorage = require("multer-storage-cloudinary");
-import cloudinary from "../../config/cloudinary";
 import multer from "multer";
+import { CloudinaryStorage } from "multer-storage-cloudinary";
+import cloudinary from "../../config/cloudinary";
 
-const storage = new cloudinaryStorage({
-    cloudinary: cloudinary,
+const storage = new CloudinaryStorage({
+  cloudinary,
+  params: async (req: any, file: any) => ({
     folder: "products",
-    allowedFormats: ["jpg", "jpeg", "png", "webp"],
-    filename: (req: any, file: any, cb: any) => {
-        cb(null, `${Date.now()}-${file.originalname}`);
-    }
+    allowed_formats: ["jpg", "jpeg", "png", "webp"],
+    public_id: `${Date.now()}-${file.originalname}`,
+  }),
 });
 
 export const upload = multer({
-    storage,
-    limits: {
-        fileSize: 10 * 1024 * 1024, // 10MB
-        files: 10 // allow up to 10 files
-    } 
+  storage,
+  limits: {
+    fileSize: 10 * 1024 * 1024,
+    files: 10,
+  },
 });
