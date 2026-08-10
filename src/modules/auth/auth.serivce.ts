@@ -76,3 +76,14 @@ export const registerService = async (payload: any) => {
     token,
   };
 };
+
+export const updateAdminService = async (id: string, payload: any) => {
+  const updateData = payload.name ? { name: payload.name } : {};
+  const user = await User.findByIdAndUpdate(id, updateData, { new: true }).select("+password");
+
+  if (!user) {
+    throw new Error("User not found");
+  }
+
+  return user;
+}
